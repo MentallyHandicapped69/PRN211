@@ -1,0 +1,24 @@
+﻿@model ProjecPRN.Models.Person
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<br />
+<br />
+<form method="POST" asp-action="Logins" asp-controller="Admin">
+    <table width="400" height="200" border="2" cellpadding="5" align="center">
+        <tr>
+            <th colspan="2"> Đăng nhập </th>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input placeholder="Tên đăng nhập" size="40" asp-for="Email" /></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input placeholder="Mật khẩu" size="40" asp-for="Password" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="Login" />
+            </td>
+        </tr>
+    </table>
+</form>

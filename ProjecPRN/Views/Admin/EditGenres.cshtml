@@ -1,0 +1,17 @@
+﻿@model ProjecPRN.Models.Genre
+
+
+
+<div class="container-fluid justify-content-center">
+    <div class="w-75 mt-5">
+        <form method="post" asp-action="EditGenres">
+            <h4><a asp-action="Index" asp-controller="Admin" style="color: black; text-decoration:none;">Admin Page</a><a asp-action="Index" asp-controller="Admin" style="color: black; text-decoration:none;">> Quản lí thể loại phim</a> > Cập nhật thể loại phim</h4>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                <input class="input-group mb-3" asp-for="Description" required />
+            </div>
+            <button type="submit" class="mt-2 btn btn-success">Submit</button>
+            <input type="hidden" asp-for="GenreId" required />
+        </form>
+    </div>
+</div>

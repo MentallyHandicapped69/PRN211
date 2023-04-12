@@ -1,0 +1,38 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Person Management";
+}
+@model IEnumerable<ProjecPRN.Models.Person>
+<h4><a asp-action="Index" asp-controller="Admin" style="color: black; text-decoration:none;">Admin Page</a></h4>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Tên đầy đủ</th>
+                <th>Giới tính</th>
+                <th>Email</th>
+                <th>Mật khẩu</th>
+                <th>Hoạt động</th>
+                <th>Vai trò</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Person p in ViewBag.Personlist)
+            {
+                <tr>
+                    <td>@p.Fullname</td>
+                    <td>@p.Gender</td>
+                    <td>@p.Email</td>
+                    <td>@p.Password</td>
+                    <td>@($"{(p.IsActive == true ? "Có" : "Không")}")</td>
+                    <td>@($"{(p.Type == 1 ? "Quản trị viên" : "Người dùng")}")</td>
+                    <td>
+                        <a asp-action="ChangePersonStatus" asp-route-id="@p.PersonId">@($"{(p.IsActive == true ? "Cấm" : "Hiện")}")</a>
+                        <a asp-action="ChangePersonType" asp-route-id="@p.PersonId" onclick="return confirm('Bạn có chắc chắn muốn thay đổi vai trò của @p.Fullname ??')">@($"{(p.Type == 1 ? "Hạ cấp xuống người dùng" : "Thăng cấp lên quản trị viên")}")</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

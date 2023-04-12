@@ -1,0 +1,90 @@
+﻿@using System.Text.Json;
+@{
+    ViewData["Title"] = ViewBag.m.Title;
+    decimal rate = 0;
+    decimal totalrate = 0;
+    string i = "Chưa có đánh giá";
+    foreach (var p in ViewBag.rate)
+    {
+        rate += (decimal)p.NumericRating;
+        totalrate += 1;
+    }
+
+}
+@if (ViewBag.ratee != null)
+{
+    <style>
+        #form{
+            display: none;
+        }
+    </style>
+}
+@model ProjecPRN.Models.Rate
+<div class="row">
+    <div class="col-3">
+        <img style="width:100%;" src="~/@ViewBag.m.Title/@ViewBag.m.Image" alt="@ViewBag.m.Title">
+    </div>
+    <div class="col-9">
+        <div class="container">
+            <h1>@ViewBag.m.Title</h1>
+            <div><b>Thể loại: </b>@ViewBag.m.Genre.Description</div>
+            <div>
+                <b>Điểm đánh giá: </b>
+                @if (totalrate != 0)
+                    @String.Format("{0:0.##}",rate / totalrate)
+
+                @if (totalrate == 0)
+                    @i
+
+                </div>
+                <div><b>Mô tả: </b>@ViewBag.m.Description</div>
+                <br />
+            </div>
+
+        @if (Context.Session.GetString("account") != null){
+            var user = (Person)JsonSerializer.Deserialize<Person>(Context.Session.GetString("account"));
+
+            <div class="container-fluid mt-3">
+                <form method="post" id="form" asp-action="Rate">
+
+                    <h1>Chi tiết đánh giá</h1>
+                    <input asp-for="MovieId" value="@ViewBag.m.MovieId" id="rate" type="hidden" /><br>
+                    <input asp-for="PersonId" value="@user.PersonId" type="hidden" /><br>
+                    <label for="rate">Điểm đánh giá: </label>&emsp;
+                    <input asp-for="NumericRating" type="number" min="0" max="10" step="0.0001" id="rate"  required/><br>
+                    <span asp-validation-for="NumericRating" style="color:red"></span>
+                    <label>Bình luận: </label><br>
+                    <textarea required asp-for="Comment" class="form-control" cols="100" rows="5"></textarea><br>
+                        <button id="submit-btn" style="padding:5px 5px;border:none;background-color:blue;border-radius:5px;margin-bottom:20px;color:white">Đánh giá</button>
+                </form>
+            </div>
+        }
+        else
+        {
+
+            <div class="container-fluid mt-3">
+                <form method="post" id="form">
+
+                    <h1>Chi tiết đánh giá</h1>
+                    <input   id="rate" type="hidden" /><br>
+                    <label for="rate">Điểm đánh giá: </label>&emsp;
+                    <input  type="number" min="0" max="10" id="rate" required /><br>
+                    <label>Bình luận: </label><br>
+                    <textarea  class="form-control" cols="100" rows="5"></textarea><br>
+                    <button id="submit-btn" style="padding:5px 5px;border:none;background-color:blue;border-radius:5px;margin-bottom:20px;color:white"> <a style="color:white; text-decoration:none;" asp-action="Login" asp-controller="Account">Đánh giá</a></button>
+                </form>
+                </div>
+        }
+
+            <div class="container-fluid">
+                <h1>Bình luận:</h1>
+                <div id="cmt-section">
+            @foreach (var p in ViewBag.rate)
+            {
+                <div><b>@p.Person.Fullname:</b> @p.Comment</div>
+                <br>
+            }
+            </div>
+        </div>
+    </div>
+</div>

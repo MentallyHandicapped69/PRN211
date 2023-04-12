@@ -1,0 +1,82 @@
+﻿@model ProjecPRN.Models.Movie
+
+
+
+
+<div class="container">
+    <h4><a asp-action="Index" asp-controller="Admin" style="color: black; text-decoration:none;">Admin Page</a><a asp-action="Movies" asp-controller="Admin" style="color: black; text-decoration:none;"> > Quản lí phim</a> > Thêm phim</h4>
+    <form method="post" asp-action="AddMovie" enctype="multipart/form-data">
+        <div>
+            <label asp-for="Title"></label>
+            <input class="input-group mb-3" asp-for="Title" required />
+            <span asp-validation-for="Title" style="color:red"></span>
+        </div>
+        <div>
+            <label asp-for="Year"></label>
+            <input class="input-group mb-3" asp-for="Year" required />
+            <span asp-validation-for="Year" style="color:red"></span>
+        </div>
+        <div>
+            <label asp-for="Image"></label><br />
+            <input name="file" type="file" id="file" accept=".jpeg,.png,.jpg" required onchange="checkFile(this)">
+
+            <script>
+
+                function checkFile(input) {
+                    if (input.files && input.files[0]) {
+                        var file = input.files[0];
+                        var fileType = file.name.substring(file.name.lastIndexOf(".") + 1).toLowerCase();
+                        if (file.size > 20000000) {
+                            alert("File size must be less than 20MB");
+                            input.value = "";
+                        } else if (fileType !== "jpeg" && fileType !== "png" && fileType !== "jpg") {
+                            alert("File type must be .jpeg, .png, or .jpg");
+                            input.value = "";
+                        }
+                    }
+                }
+            </script>
+
+            <input type="hidden" asp-for="Image" id="Image" class="form-control form-control-lg"
+                   name="Image"  />
+            <img id="preview" width="300px" height="190px">
+            <span asp-validation-for="Image" style="color:red"></span>
+        </div>
+        <br />
+        <div>
+            <label asp-for="Description"></label>
+            <textarea class="input-group mb-3" style="height:130px" required asp-for="Description"></textarea>
+            <span asp-validation-for="Description" style="color:red"></span>
+        </div>
+        <div>
+            <label>Genre</label>
+            <select asp-for="GenreId" asp-items="@(new SelectList(ViewData["Genres"] as List<Genre>, "GenreId", "Description"))"></select>
+            <span asp-validation-for="GenreId" style="color:red"></span>
+        </div>
+        <button type="submit" value="Add" class="mt-2 btn btn-success">Thêm</button>
+    </form>
+
+</div>
+<script>
+    var input = document.getElementById('file');
+    var fileName = document.getElementById('Image');
+    input.addEventListener('change', function () {
+        fileName.value = input.files[0].name;
+    });
+</script>
+
+<script>
+    const fileInput = document.getElementById('file');
+    const preview = document.getElementById('preview');
+    fileInput.addEventListener('change', function () {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.addEventListener('load', function () {
+            preview.src = reader.result;
+        }, false);
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+</div>

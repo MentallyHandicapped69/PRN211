@@ -1,0 +1,54 @@
+﻿@using ProjecPRN.Models;
+@model Person;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AuthoringTagHelpers
+<style>
+    .validate{
+        text-align:left;
+        color:red;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div style="width: 500px;margin: 0 auto; background-color: rgb(183, 204, 205); padding: 2rem;">
+            <form asp-action="Register" method="post">
+                <span>Đăng kí tài khoản</span>
+                <div class="form-group">
+                    <input type="text" class="form-control" asp-for="Email" placeholder="Email address *" />
+                    <span class="validate" asp-validation-for="Email"></span><br />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" asp-for="Password" placeholder="Password *" />
+                    <span class="validate" asp-validation-for="Password"></span><br />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" asp-for="Fullname" placeholder="Fullname *" />
+                    <span class="validate" asp-validation-for="Fullname"></span><br />
+                </div>
+                <div class="d-flex justify-content-start">
+                    <span style="margin-right:15px;">Giới tính </span>
+                    <label for="male">nam</label>
+                    <input type="radio" id="male" asp-for="Gender" value="Nam" />
+                    <label for="male">nữ</label>
+                    <input type="radio" id="female" asp-for="Gender" value="Nữ" />
+                </div>
+                <div class="d-flex justify-content-start">
+                    @if(ViewBag.Message != null)
+                    {
+                        <span class="validate" class="text-danger">@ViewBag.Message</span>
+                    }
+                </div>
+                <p>Nếu tài khoản đã tồn tại. <a href="Login">Đăng nhập</a></p>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <button type="submit" class="btn btn-primary">Đăng Kí</button>
+                    </div>
+                    <div>
+                        <a href="#">Quên mật khẩu</a>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>

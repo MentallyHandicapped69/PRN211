@@ -1,0 +1,50 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Movies Management";
+}
+@model IEnumerable<ProjecPRN.Models.Movie>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+        <h4><a asp-action="Index" asp-controller="Admin" style="color: black; text-decoration:none;">Admin Page</a> > Quản lí phim</h4>
+        </div>
+        <div class="col-8 d-flex justify-content-end">
+            <a class="btn btn-danger rounded-pill w-25 mb-2 mt-2" asp-action="AddMovie">Thêm phim</a>
+        </div>     
+    </div>
+    <table class="table table-striped" border="2">
+        <thead>
+            <tr>
+                <th scope="col">Tiêu đề</th>
+                <th>Ảnh</th>
+                <th>Năm</th>
+                <th>Mô tả</th>
+                <th>Thể loại</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Movie m in ViewBag.MoviesList)
+            {
+                <tr>
+                    <td>@m.Title</td>
+                    <td><img style="width:150px" src="~/@m.Title/@m.Image" alt="hihi"></td>
+                    <td>@m.Year</td>
+                    @if (m.Description.Length > 35)
+                    {
+                        <td>@m.Description.Substring(0,35)...</td>
+                    }
+                    @if (m.Description.Length <= 35)
+                    {
+                        <td>@m.Description</td>
+                    }
+                    <td>@m.Genre.Description</td>
+                    <td>
+                        <a asp-action="EditMovie" asp-route-id="@m.MovieId">Sửa đổi</a>
+                        <a asp-action="DeleteMovie" asp-route-id="@m.MovieId" onclick="return confirm('Bạn có chắc muốn xóa phim @m.Title ?')">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

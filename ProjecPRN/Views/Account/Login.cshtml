@@ -1,0 +1,46 @@
+﻿@using ProjecPRN.Models;
+@model Person;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AuthoringTagHelpers
+<style>
+    .validate{
+        text-align: left;
+        color:red;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div style="width: 500px;margin: 0 auto; background-color: rgb(165, 165, 165); padding: 2rem;">
+            <div class="d-flex justify-content-between">
+                    <button class="btn btn-primary">Đăng nhập bằng facebook</button>
+                    <button class="btn btn-danger">Đăng nhập bằng google</button>
+                </div>
+            <form  asp-action="Login" method="post">
+                
+                <span >Hoặc</span>
+                <div class="form-group">
+                    <input type="text" class="form-control" asp-for="Email" placeholder="Email address *"/>
+                    <span class="validate" asp-validation-for="Email" class="text-danger"></span><br />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" asp-for="Password" placeholder="Password *" />
+                    <span class="validate" asp-validation-for="Password" class="text-danger"></span><br />
+                </div>
+                <div class="d-flex justify-content-start">
+                    @if (ViewBag.Error != null)
+                    {
+                        <span class="validate">@ViewBag.Error</span>
+                    }
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <button type="submit" class="btn btn-primary">Đăng Nhập</button>
+                    </div>
+                    <div>
+                        <a href="#">Quên mật khẩu</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
